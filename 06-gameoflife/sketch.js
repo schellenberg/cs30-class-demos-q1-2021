@@ -3,6 +3,7 @@
 let gridDimensions = 15;
 let grid;
 let cellSize;
+let autoPlay = false;
 
 function setup() {
   if (windowHeight < windowWidth) {
@@ -19,6 +20,9 @@ function setup() {
 function draw() {
   background(220);
   displayGrid();
+  if (autoPlay) {
+    update();
+  }
 }
 
 function keyPressed() {
@@ -30,6 +34,9 @@ function keyPressed() {
   }
   if (key === " ") {
     update();
+  }
+  if (key === "p") {
+    autoPlay = !autoPlay;
   }
 }
 
