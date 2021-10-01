@@ -1,9 +1,14 @@
 // Grid Neighbours
 
-let gridDimensions = 15;
+let gridDimensions = 40;
 let grid;
 let cellSize;
 let autoPlay = false;
+let gun;
+
+function preload() {
+  gun = loadJSON("assets/gosper-gun.json");
+}
 
 function setup() {
   if (windowHeight < windowWidth) {
@@ -20,7 +25,7 @@ function setup() {
 function draw() {
   background(220);
   displayGrid();
-  if (autoPlay) {
+  if (autoPlay && frameCount % 10 === 0) {
     update();
   }
 }
@@ -37,6 +42,9 @@ function keyPressed() {
   }
   if (key === "p") {
     autoPlay = !autoPlay;
+  }
+  if (key === "g") {
+    grid = gun;
   }
 }
 
