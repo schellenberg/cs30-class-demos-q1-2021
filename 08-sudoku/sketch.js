@@ -18,10 +18,10 @@ let grid;
 
 function setup() {
   if (windowWidth < windowHeight) {
-    createCanvas(windowWidth, windowWidth);
+    createCanvas(windowWidth*0.8, windowWidth*0.8);
   }
   else {
-    createCanvas(windowHeight, windowHeight);
+    createCanvas(windowHeight*0.8, windowHeight*0.8);
   }
 
   grid = initialGrid;
@@ -31,6 +31,10 @@ function setup() {
 function draw() {
   background(220);
   displayGrid();
+}
+
+function windowResized() {
+  setup();
 }
 
 function displayGrid() {
