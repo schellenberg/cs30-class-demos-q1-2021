@@ -6,6 +6,7 @@ let cellSize;
 let level1;
 let playerX = 0;
 let playerY = 0;
+let state = "rest";
 
 function preload() {
   level1 = loadJSON("assets/level1.json");
@@ -29,21 +30,46 @@ function setup() {
 
 function draw() {
   background(220);
+  moveByState();
   displayGrid();
 }
 
 function keyPressed() {
-  if (key === "s") {
-    tryMovingTo(playerX, playerY+1);
+  if (state === "rest") {
+    if (key === "s") {
+      state = "down";
+    }
+    else if (key === "w") {
+      state = "up";
+    }
+    else if (key === "d") {
+      state = "right";
+    }
+    else if (key === "a") {
+      state = "left";
+    }
   }
-  else if (key === "w") {
-    tryMovingTo(playerX, playerY-1);
-  }
-  else if (key === "d") {
-    tryMovingTo(playerX+1, playerY);
-  }
-  else if (key === "a") {
-    tryMovingTo(playerX-1, playerY);
+}
+
+function moveByState() {
+  if (frameCount % 30 === 0) {
+    let didMove;
+    if (state === "right") {
+      didMove = tryMovingTo(playerX+1, playerY);
+    }
+    else if (state === "left") {
+      didMove = tryMovingTo(playerX-1, playerY);
+    }
+    else if (state === "up") {
+      didMove = tryMovingTo(playerX, playerY-1);
+    }
+    else if (state === "down") {
+      didMove = tryMovingTo(playerX, playerY+1);
+    }
+
+    if (!didMove) {
+      state = "rest";
+    }
   }
 }
 
@@ -61,8 +87,12 @@ function tryMovingTo(newX, newY) {
 
       //put player back in grid
       grid[newY][newX] = 9;
+
+      return true; //so I know we moved
     }
   }
+
+  return false; //no move happened
 }
 
 function mousePressed() {
