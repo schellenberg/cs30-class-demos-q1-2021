@@ -8,15 +8,20 @@
 
 let enterprise;
 let shipImage, bulletImage;
+let shootSound, bgMusic;
 
 function preload() {
   shipImage = loadImage("assets/enterprise.png");
   bulletImage = loadImage("assets/laser-shot.png");
+  shootSound = loadSound("assets/laser1.mp3");
+  bgMusic = loadSound("assets/OrbitalColossus.mp3");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   enterprise = new Ship(width / 2, height / 2, shipImage);
+  // bgMusic.setVolume(0.5);
+  bgMusic.loop();
 }
 
 function draw() {
@@ -50,6 +55,7 @@ class Ship {
   handleKeyPress() {
     // handle WASD key presses -- you will likely want to change booleans here
     if (key === " ") {
+      shootSound.play();
       let middleX = this.x + this.theImage.width/2;
       let bullet = new Bullet(middleX, this.y, 0, -5, bulletImage);
       this.theBullets.push(bullet);
